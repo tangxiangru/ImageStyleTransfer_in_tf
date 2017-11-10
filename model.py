@@ -12,6 +12,12 @@ MEAN_PIXELS = np.array([123.68, 116.779, 103.939]).reshape((1,1,1,3))
 VGG_DOWNLOAD_LINK = 'http://www.vlfeat.org/matconvnet/models/imagenet-vgg-verydeep-19.mat'
 VGG_MODEL = 'imagenet-vgg-verydeep-19.mat'
 
+def download(download_link, file_name, expected_bytes):
+    file_name, _ = urllib.request.urlretrieve(download_link, file_name)
+    file_stat = os.stat(file_name)
+    if file_stat.st_size == expected_bytes:
+        print('downloaded over')
+
 def create_content_loss(p, f):
     content_loss = tf.reduce_sum(tf.square(f-p))/(4*p.size)
     return content_loss
